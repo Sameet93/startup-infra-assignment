@@ -82,9 +82,9 @@ Tools used:
 
 Prompts and modifications:
 
-- I used AI to accelerate boilerplate and repo organization work around the Terraform and Terragrunt demo.
-- I reviewed and adjusted the output myself, especially around architecture trade-offs, stack boundaries, networking, and documentation.
-- The final design choices and prioritization reflect my own reasoning.
+- I made the architectural direction and final trade-off decisions myself, including ECS on Fargate instead of Kubernetes, Terraform plus Terragrunt for IaC, GitHub Actions for CI/CD, and queue-based workload isolation for spike handling.
+- I used AI primarily to accelerate implementation scaffolding, repository refactoring, and documentation drafting around the Terraform and Terragrunt demo.
+- I reviewed and adjusted the output myself, especially around stack boundaries, networking, and final submission wording.
 
 Verification:
 

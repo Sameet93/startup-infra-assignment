@@ -6,9 +6,9 @@
 
 ## Prompts And Modifications
 
-- I used AI to accelerate boilerplate and repo organization work around the Terraform and Terragrunt demo.
-- I reviewed and adjusted the output myself, especially around architecture trade-offs, stack boundaries, networking, and documentation.
-- The final design choices and prioritization reflect my own reasoning.
+- I made the architectural direction and final trade-off decisions myself.
+- I used AI primarily to accelerate implementation scaffolding, repo organization, and documentation around the Terraform and Terragrunt demo.
+- I reviewed and adjusted the output myself, especially around stack boundaries, networking, and final wording.
 
 ## Verification
 

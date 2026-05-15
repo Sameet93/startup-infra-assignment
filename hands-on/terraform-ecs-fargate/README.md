@@ -289,6 +289,25 @@ Before running for real:
 - to actually apply this, you would still need to bootstrap those backend resources first
 - for a real deployment, you would also move database credentials out of `env.hcl` and into Secrets Manager or SSM Parameter Store
 
+### Review-Only Dry Run
+
+This is the workflow I actually validated for the take-home submission.
+
+It avoids creating infrastructure and bypasses the placeholder remote-state settings by using:
+
+- `TG_USE_LOCAL_BACKEND=true`
+- `TG_USE_MOCK_OUTPUTS=true`
+
+Example for `dev`:
+
+```bash
+cd /opt/sameet/code/startup-infra-assignment/hands-on/terraform-ecs-fargate/platform/dev
+TG_USE_LOCAL_BACKEND=true TG_USE_MOCK_OUTPUTS=true terragrunt run-all init
+TG_USE_LOCAL_BACKEND=true TG_USE_MOCK_OUTPUTS=true terragrunt run-all plan
+```
+
+The same pattern can be used for `testing`, `stage`, and `prod`.
+
 ### Deploy A Full Environment
 
 For `dev`:
@@ -394,7 +413,8 @@ Tools used:
 
 Prompts and modifications:
 
-- I used AI to help refactor the earlier Terraform-only layout into a Terragrunt-based multi-environment structure.
+- I made the architectural direction and trade-off decisions myself, including the choice of ECS on Fargate, Terraform plus Terragrunt, GitHub Actions, and the multi-environment promotion model.
+- I used AI primarily to accelerate implementation work, including refactoring the earlier Terraform-only layout into a Terragrunt-based multi-environment structure and drafting supporting documentation.
 - I manually reviewed the resulting architecture explanation to ensure the claims about stack deployment, environment deployment, dependency handling, and module boundaries were accurate.
 
 Verification:

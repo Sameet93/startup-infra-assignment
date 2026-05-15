@@ -6,16 +6,16 @@
 
 ## Prompts And Modifications
 
-- I used AI assistance to speed up routine implementation work such as:
-  - creating the initial Terraform module and environment layout
-  - refactoring the Terraform demo into a Terragrunt-based multi-environment structure
-  - drafting README sections, architecture wording, and migration-plan structure
-  - tightening the networking demo to show public ALB subnets, private application and database subnets, and NAT-based egress
-- I did not rely on AI to make the core architectural decision on its own. I reviewed and chose the main trade-offs myself, including:
+- I made the architectural direction and trade-off decisions myself, including:
   - ECS on Fargate instead of Kubernetes
   - Terraform as the infrastructure language, with Terragrunt to reduce multi-environment repetition
   - GitHub Actions as the preferred CI/CD approach
   - separating user-facing traffic from heavier background processing in the target design
+- I used AI assistance primarily to speed up implementation work such as:
+  - creating the initial Terraform module and environment layout
+  - refactoring the Terraform demo into a Terragrunt-based multi-environment structure
+  - drafting README sections, architecture wording, and migration-plan structure
+  - tightening the networking demo to show public ALB subnets, private application and database subnets, and NAT-based egress
 - I reviewed the generated output and made substantive edits so the submission matched the assignment constraints, including:
   - changing the infrastructure layout to support independently deployable stacks
   - introducing the `platform -> stacks -> _modules` structure
