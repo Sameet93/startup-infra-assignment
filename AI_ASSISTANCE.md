@@ -1,4 +1,4 @@
-# AI Assistance Disclosure (Detailed)
+# AI Assistance Disclosure
 
 ## Tools Used
 

@@ -27,8 +27,8 @@ The submission includes:
   - hands-on demo overview
   - run, inspect, and destroy instructions
   - assumptions, shortcuts, and next steps
-- [AI_ASSISTANCE_BRIEF.md](./AI_ASSISTANCE_BRIEF.md)
-  - concise standalone AI disclosure
+- [AI_ASSISTANCE.md](./AI_ASSISTANCE.md)
+  - standalone AI disclosure
 
 ## Recommended Review Order
 
