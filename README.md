@@ -1,35 +1,78 @@
 # Startup Infra Assignment
 
-This folder contains the deliverables for the take-home infrastructure assignment.
+This repository contains my take-home submission for a DevOps assignment based on re-architecting a small AWS-hosted application over the next 6 to 12 months.
 
-## Contents
+The submission includes:
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md): target-state architecture proposal and system diagram
-- [MIGRATION_PLAN.md](./MIGRATION_PLAN.md): phased migration plan, environment strategy, and database scalability approach
-- [hands-on/terraform-ecs-fargate/README.md](./hands-on/terraform-ecs-fargate/README.md): hands-on demo documentation
-- [AI_ASSISTANCE_BRIEF.md](./AI_ASSISTANCE_BRIEF.md): concise AI assistance disclosure
-- `hands-on/terraform-ecs-fargate/`: Terraform demo for a basic ECS Fargate service with autoscaling
+- a target-state architecture proposal
+- a phased migration plan with low-downtime rollout
+- a hands-on Terraform and Terragrunt demo for a small ECS Fargate platform
+- an AI assistance disclosure
 
-## Chosen Hands-On Area
+## Repository Guide
 
-The hands-on demo uses Terraform and Terragrunt to model a small ECS Fargate platform with:
+- [ARCHITECTURE.md](./ARCHITECTURE.md)
+  - target-state platform design
+  - Mermaid system diagram
+  - ECS vs Kubernetes reasoning
+  - CI/CD, observability, and operational targets
+- [MIGRATION_PLAN.md](./MIGRATION_PLAN.md)
+  - 0 to 3 month priorities
+  - 3 to 6 month and 6 to 12 month roadmap
+  - environment strategy for `dev`, `testing`, `stage`, and `prod`
+  - low-downtime migration sequence
+  - database scalability approach
+  - risks and mitigations
+- [hands-on/terraform-ecs-fargate/README.md](./hands-on/terraform-ecs-fargate/README.md)
+  - hands-on demo overview
+  - run, inspect, and destroy instructions
+  - assumptions, shortcuts, and next steps
+- [AI_ASSISTANCE_BRIEF.md](./AI_ASSISTANCE_BRIEF.md)
+  - concise standalone AI disclosure
+
+## Recommended Review Order
+
+1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) for the overall platform direction.
+2. Read [MIGRATION_PLAN.md](./MIGRATION_PLAN.md) for rollout sequencing, priorities, and database strategy.
+3. Review [hands-on/terraform-ecs-fargate/README.md](./hands-on/terraform-ecs-fargate/README.md) and the Terraform / Terragrunt code for the implementation sample.
+
+## Proposed Direction
+
+- Runtime: `AWS ECS on Fargate`
+- Infrastructure as code: `Terraform`, with `Terragrunt` for multi-environment composition
+- CI/CD: `GitHub Actions`
+- Database: `Amazon RDS for PostgreSQL`
+- Spike handling: `Amazon SQS` with separate worker services for expensive tasks
+- Fixed outbound IP: private subnets with `NAT Gateway` and Elastic IP
+- Observability: `CloudWatch` plus `OpenTelemetry`
+
+The central design choice is to keep the application as a modular monolith initially, but separate expensive background work from user-facing traffic. That addresses the stated memory and database pressure problems without introducing Kubernetes complexity too early.
+
+## Hands-On Scope
+
+For the implementation portion, I chose the Terraform option and built a small reviewable ECS Fargate platform that includes:
 
 - a VPC with public and private subnets
-- a NAT gateway for outbound access from private workloads
+- a NAT gateway for fixed outbound egress
 - an Application Load Balancer
 - an ECS cluster and service
-- CloudWatch logs
+- CloudWatch logging
 - CPU and memory-based autoscaling
-- environment orchestration for `dev`, `testing`, `stage`, and `prod`
+- environment structure for `dev`, `testing`, `stage`, and `prod`
 
-This was chosen because it aligns directly with the proposed production architecture and demonstrates the most important platform patterns for the scenario.
+The hands-on demo is intentionally narrower than the full design proposal. The architecture and migration documents describe additional production components such as SQS workers, fuller observability, secrets management, and a more complete database scale plan.
+
+## Validation Summary
+
+- I ran `terraform fmt -recursive` on the hands-on demo.
+- I ran Terragrunt `init` and `plan` across `dev`, `testing`, `stage`, and `prod` in dry-run mode.
+- I did not run `apply`, because this repo is intentionally review-only and uses placeholder values for environments and remote state.
 
 ## Notes
 
-- The demo is intentionally smaller than the full architecture proposal.
-- It focuses on the core runtime, networking, and scaling pattern rather than the full production estate.
-- The production design in `ARCHITECTURE.md` still assumes additional pieces such as RDS, SQS workers, secrets management, and observability improvements.
-- The migration sequencing, environment promotion model, and database scale strategy are documented in `MIGRATION_PLAN.md`.
+- The hands-on demo is structured to be clean and reviewable rather than production-ready.
+- The repository uses realistic infrastructure shapes and sizing patterns, but the environment values are intentionally non-production.
+- The Terraform and Terragrunt layout is designed to show reusable modules, stack wrappers, dependency wiring, and per-environment orchestration.
 
 ## AI Assistance Disclosure
 
