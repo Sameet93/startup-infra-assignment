@@ -10,6 +10,8 @@ locals {
   use_local_backend = get_env("TG_USE_LOCAL_BACKEND", "false") == "true"
 }
 
+download_dir = get_env("TG_DOWNLOAD_DIR", "/tmp/terragrunt-cache")
+
 remote_state {
   backend = local.use_local_backend ? "local" : "s3"
 

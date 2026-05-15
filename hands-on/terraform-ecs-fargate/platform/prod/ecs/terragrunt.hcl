@@ -5,7 +5,7 @@ include "root" {
 locals {
   env              = read_terragrunt_config(find_in_parent_folders("env.hcl"))
   name_prefix      = "${local.env.locals.project_name}-${local.env.locals.environment}"
-  use_mock_outputs = get_env("TG_USE_MOCK_OUTPUTS", "false") == "true"
+  use_mock_outputs = get_env("TG_USE_MOCK_OUTPUTS", "false") == "true" || contains(["init", "validate", "plan"], get_terraform_command())
 }
 
 terraform {
@@ -14,7 +14,7 @@ terraform {
 
 dependency "networking" {
   config_path  = "../networking"
-  skip_outputs = get_env("TG_USE_MOCK_OUTPUTS", "false") == "true"
+  skip_outputs = local.use_mock_outputs
 
   mock_outputs = {
     vpc_id                = "vpc-000000"
@@ -29,7 +29,7 @@ dependency "networking" {
 
 dependency "iam" {
   config_path  = "../iam"
-  skip_outputs = get_env("TG_USE_MOCK_OUTPUTS", "false") == "true"
+  skip_outputs = local.use_mock_outputs
 
   mock_outputs = {
     ecs_task_execution_role_arn = "arn:aws:iam::123456789012:role/mock-ecs-execution"
@@ -40,7 +40,7 @@ dependency "iam" {
 
 dependency "cloudwatch" {
   config_path  = "../cloudwatch"
-  skip_outputs = get_env("TG_USE_MOCK_OUTPUTS", "false") == "true"
+  skip_outputs = local.use_mock_outputs
 
   mock_outputs = {
     log_group_name = "/ecs/mock-prod"
